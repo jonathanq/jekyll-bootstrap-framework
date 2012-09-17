@@ -32,8 +32,7 @@ task :bootstrap_js do
 
   template = ERB.new %q{
   <!-- AUTOMATICALLY GENERATED. DO NOT EDIT. -->
-  <% paths.each do |path| %>
-  <script type="text/javascript" src="/bootstrap/js/<%= path %>"></script>
+  <% paths.each do |path| %><script type="text/javascript" src="/bootstrap/js/<%= path %>"></script>
   <% end %>
   }
 
@@ -42,7 +41,7 @@ task :bootstrap_js do
   Dir.glob(File.join(BOOTSTRAP_SOURCE, 'js', '*.js')).each do |source|
     base = File.basename(source).sub(/^(.*)\.js$/, '\1.min.js')
     paths << base
-    target = File.join('_bootstrap/js', base)
+    target = File.join('js', base)
     if different?(source, target)
       File.open(target, 'w') do |out|
         out.write minifier.compile(File.read(source))
